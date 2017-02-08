@@ -4,4 +4,8 @@
 % Main file for running the CFD code
 
 %%
-% For now I shall simply call the 
+% For now I shall simply call the FDCalc function to compute the derivative
+% of sin(x)
+grid = linspace(0,2*pi);
+[derivative, outgrid] = FDCalc(@sin,grid,'forward',1);
+

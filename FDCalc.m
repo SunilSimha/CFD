@@ -14,14 +14,14 @@ n = length(grid);
         case 1
             switch method
                 case 'forward'
-                    derivative = diff(func_over_grid)/diff(grid);
+                    derivative = diff(func_over_grid)./diff(grid);
                     outGrid = grid(1:(n-1));
                 case 'backward'
                     outGrid = grid(2:n);
-                    derivative = (func_over_grid(2:n)-func_over_grid(1:(n-1)))/(grid(2:n)-grid(1:(n-1)));
+                    derivative = (func_over_grid(2:n)-func_over_grid(1:(n-1)))./(grid(2:n)-grid(1:(n-1)));
                 case 'central'
                     outGrid = grid(2:(n-1));
-                    derivative = (func_over_grid(3:n)-func_over_grid(1:(n-2)))/(grid(3:n)-grid(1:(n-2)));
+                    derivative = (func_over_grid(3:n)-func_over_grid(1:(n-2)))./(grid(3:n)-grid(1:(n-2)));
                 otherwise
                     error('method can only take values: "forward", "backward", "central"');
             end 
