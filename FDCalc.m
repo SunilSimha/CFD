@@ -1,16 +1,32 @@
 %% Finite difference function:
-% Created by: H.S. Sunil Simha. Version : 1.1
+% Created by: H.S. Sunil Simha. Version : 1.2
 % Updated on Feb 08 2017
-% This function evaluates the derivative of a given function using Taylor
-% approximation.
+% 
+% FDCALC is a finite difference calculator that computes the derivative of
+% a given function on the given grid using a finite differencing scheme. It
+% takes as arguments:
+%   givenFunc: A function handle. For example @sin.
+%   grid: The grid over which the derivative is to be computed
+%   method: 'forward, 'backward' or 'central' differencing schemes can be used.
+%   differencing_order: The order of the derivative to be computed.
+%   see also DIFF
 
-function [derivative, outGrid] = FDCalc(givenFunc,grid, method, order)
-% First, lets compute the function over the grid:
+function [derivative, outGrid] = FDCalc(givenFunc, grid, method, differencing_order)
+% Checks
+if ~isa(givenFunc,'function_handle')
+    error('The first argument must be a function handle. For example @sin.');
+elseif floor(differencing_order)~=differencing_order
+    error('The differencing order must be an integer');
+elseif ~isreal(grid)
+    error('The grid must be a float array');
+end
+
+% First, let's compute the function over the grid:
 func_over_grid = givenFunc(grid);
 n = length(grid);
 % Now, depending on the method chosen, the derivative is computed using
 % finite difference scheme
-    switch order
+    switch differencing_order
         case 1
             switch method
                 case 'forward'
@@ -23,7 +39,33 @@ n = length(grid);
                     outGrid = grid(2:(n-1));
                     derivative = (func_over_grid(3:n)-func_over_grid(1:(n-2)))./(grid(3:n)-grid(1:(n-2)));
                 otherwise
-                    error('method can only take values: "forward", "backward", "central"');
-            end 
+                    error('method can only take values: ''forward'', ''backward'', ''central''');
+            end
+        case 2
+            switch method
+                case 'forward'
+                    [dfdx, x] = FDCalc(givenFunc,grid,'forward',1);
+                    derivative = diff(dfdx)./diff(x);
+                    m = length(x);
+                    outGrid = x(1:(m-1));
+                case 'backward'
+                    [dfdx, x] = FDCalc(givenFunc,grid,'backward',1);
+                    m = length(x);
+                    derivative = (dfdx(2:m)-dfdx(1:(m-1)))./(x(2:m)-x(1:(m-1)));
+                    outGrid = x(2:m);
+                case 'central'
+%                   It must be noted that the second order derivative
+%                   calculated through the central difference scheme is
+%                   equivalent to consecutive application of backward and
+%                   forward differencing.
+                    [dfdx, x] = FDCalc(givenFunc,grid,'backward',1);
+%                   Computing forward difference of the derivative obtained
+%                   from backward differencing.
+                    m = length(x);
+                    derivative = diff(dfdx)./diff(x);
+                    outGrid = x(1:(m-1));
+                otherwise
+                    error('method can only take values: ''forward'', ''backward'', ''central''');
+            end
     end
 end
