@@ -1,6 +1,6 @@
 %% Finite difference function:
-% Created by: H.S. Sunil Simha. Version : 1.2
-% Updated on Feb 08 2017
+% Created by: H.S. Sunil Simha. Version : 1.3
+% Updated on Feb 10 2017
 % 
 % FDCALC is a finite difference calculator that computes the derivative of
 % a given function on the given grid using a finite differencing scheme. It
@@ -18,7 +18,7 @@ if ~isa(givenFunc,'function_handle')
 elseif floor(differencing_order)~=differencing_order
     error('The differencing order must be an integer');
 elseif ~isreal(grid)
-    error('The grid must be a float array');
+    error('The grid must e a float array');
 end
 
 % First, let's compute the function over the grid:
@@ -27,7 +27,12 @@ n = length(grid);
 % Now, depending on the method chosen, the derivative is computed using
 % finite difference scheme
     switch differencing_order
+        case 0
+%           Simply return the function computed over the grid
+            derivative = func_over_grid;
+            outGrid = grid;
         case 1
+%           Compute first derivative
             switch method
                 case 'forward'
                     derivative = diff(func_over_grid)./diff(grid);
@@ -42,6 +47,7 @@ n = length(grid);
                     error('method can only take values: ''forward'', ''backward'', ''central''');
             end
         case 2
+%           Compute second derivative.
             switch method
                 case 'forward'
                     [dfdx, x] = FDCalc(givenFunc,grid,'forward',1);
@@ -67,5 +73,7 @@ n = length(grid);
                 otherwise
                     error('method can only take values: ''forward'', ''backward'', ''central''');
             end
+        otherwise
+            error('Sorry. This function can currently only compute upto second derivative.');
     end
 end
