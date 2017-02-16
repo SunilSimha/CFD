@@ -34,19 +34,17 @@ dPrime = zeros(1,N);
 
 x = zeros(1,N); %The return array
 
-% Now if you have followed the wikipedia page mentioned earlier, you'll
-% notice that the arrays a and c have indices that go from 2 to N and 1 to
-% N-1 respectively. To make the code more elegant, I shall append a 0 to
-% the left of a and one to the right of c.
-a = cat(1, [0], a);
-c = cat(1, c, [0]);
-
 % Now to write the recursion relation
-for i = 1:N
-   cPrime(i) = c(i)/(b(i)-a(i)*cPrime(i-1));
-   dPrime(i) = (d(i)-a(i)*dPrime(i-1))/(b(i)-a(i)*cPrime(i-1));
-end
+%--------------------------------------------------------------------------
+    cPrime(1) = c(1)/b(1);
+    dPrime(1) = d(1)/b(1);
 
+for i = 2:N-1
+   cPrime(i) = c(i)/(b(i)-a(i-1)*cPrime(i-1));
+   dPrime(i) = (d(i)-a(i-1)*dPrime(i-1))/(b(i)-a(i-1)*cPrime(i-1));
+end
+   dPrime(N) = (d(N)-a(N-1)*dPrime(N-1))/(b(N)-a(N-1)*cPrime(N-1));
+%--------------------------------------------------------------------------
 %And finally the solution
 x(N) = dPrime(N);
 for i = (N-1):-1:1
