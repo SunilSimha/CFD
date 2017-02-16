@@ -77,3 +77,4 @@ title('Errors in second derivative')
 xlabel('Log10(number of grid points between 0 and 2pi)')
 ylabel('Log10(Errors)');
 legend('forward','backward','central')
+clear;

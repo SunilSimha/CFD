@@ -18,7 +18,7 @@ if ~isa(givenFunc,'function_handle')
 elseif floor(differencing_order)~=differencing_order
     error('The differencing order must be an integer');
 elseif ~isreal(grid)
-    error('The grid must e a float array');
+    error('The grid must be a float array');
 end
 
 % First, let's compute the function over the grid:
