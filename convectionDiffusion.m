@@ -32,8 +32,6 @@ elseif (len(phiBound) ~= 2)
     error('Invalid boundary conditions')
 end
 
-phi = zeros(1,length(x)); %Initialising the solution vector
-
 F = rho*u; %A convenient paramterisation
 
 %@Aswin and Remil: You need to write functions that fit here:
