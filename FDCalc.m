@@ -1,16 +1,22 @@
 %% Finite difference function:
-% Created by: H.S. Sunil Simha. Version : 1.3
-% Updated on Feb 10 2017
+% Created by: H.S. Sunil Simha. Version : 1.4
+% Updated on Mar 08 2017
 % 
 % FDCALC is a finite difference calculator that computes the derivative of
 % a given function on the given grid using a finite differencing scheme. It
 % takes as arguments:
+%   
+%   Arguments:
 %   givenFunc: A function handle. For example @sin.
 %   grid: The grid over which the derivative is to be computed
+%   
+%   Optional Arguments:
 %   method: 'forward, 'backward' or 'central' differencing schemes can be used.
 %   differencing_order: The order of the derivative to be computed.
+%   scheme_order: The order of accuracy of finite difference scheme.
 %   see also DIFF
 
+%%
 function [derivative, outGrid] = FDCalc(givenFunc, grid, method, differencing_order)
 % Checks
 if ~isa(givenFunc,'function_handle')

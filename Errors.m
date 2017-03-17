@@ -8,8 +8,7 @@
 % derivatives will be computed over the grid taken from the output of
 % FDCALC.
 
-% This is the maximum number of points that we shall consider in a grid 
-
+%%
 % Initializing arrays to store errors.
 %For first derivatives:
 err_fo_1 = zeros(1,6);
@@ -21,6 +20,7 @@ err_fo_2 = zeros(1,6);
 err_ba_2 = zeros(1,6);
 err_ce_2 = zeros(1,6);
 
+%%
 % Now to compute the errors.
 for index = 1:6
     n = 10^index; %Number of grid points
@@ -64,6 +64,7 @@ for index = 1:6
     err_ce_2(index) = sqrt(sum(resid_ce_2.*resid_ce_2));
 end
 
+%%
 figure
 plot(1:6,log10(err_fo_1),'--o',1:6,log10(err_ba_1),':*',1:6,log10(err_ce_1),'-+')
 title('Errors in first derivative')

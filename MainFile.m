@@ -17,9 +17,13 @@ n = input('Input the number of points the grid must have: ');
 grid = linspace(xmin,xmax,n);
 method = input('Choose the method of differencing: ''forward'',''backward'' or ''central'': ');
 differencing_order = input('Choose the order of the derivative. Can currently only take 0,1 or 2: ');
-[derivative, outGrid] = FDCalc(functionHandle,grid,method,differencing_order);
-funcValue = functionHandle(grid);
 
+%% Compute the function and the derivative
+
+funcValue = functionHandle(grid);
+[derivative, outGrid] = FDCalc(functionHandle,grid,method,differencing_order);
+
+%%
 % Now to just plot the function and it's derivative:
 figure('Name','Finite difference scheme of computing derivative');
 plot(grid, funcValue);
