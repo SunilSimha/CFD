@@ -24,7 +24,7 @@
 % phi          : (vector) value of the quantity of interest at the nodes.
 
 %%
-function phi = convectionDiffusion(x, phiBound, u, rho, gamma, area, method)
+function phi = convectionDiffusion(x, phiBound, u, rho, gamma, method)
 %Checks:
 if (method ~= 'cd'|| method ~= 'uw' || method ~= 'hy')
     error('Invalid method. Only ''cd'',''uw'' and ''hy'' are accepted')
@@ -36,7 +36,14 @@ phi = zeros(1,length(x)); %Initialising the solution vector
 
 F = rho*u; %A convenient paramterisation
 
+%@Aswin and Remil: You need to write functions that fit here:
+
 switch method
     case 'cd'
-        
+        phi = convDiffCD(x, phiBound, F, gamma);%I'm doing this
+    case 'uw'
+        phi = convDiffUW(x, phiBound, F, gamma);
+    case 'hy'
+        phi = convDiffHY(x, phiBound, F, gamma);
+end
 end
