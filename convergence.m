@@ -15,7 +15,7 @@ k = 0.5;    % W/m^2/K
 q = 1e6;    % W/m^3
 
 % Now to loop over number of grid points and compute error.
-error = zeros(1,8);
+error = zeros(1,100);
 numbers = floor(10.^linspace(1,7,100));
 for i=1:100
     N = numbers(i); %Number of grid points

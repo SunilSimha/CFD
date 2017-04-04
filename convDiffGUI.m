@@ -88,12 +88,22 @@ if methodName~=1
     dx = 1/N;
     x = linspace(dx,1-dx,N);
     x = cat(2,0,x,1);
-    if methodName == 2
-        method = 'cd';
-        legendString = 'Central difference solution';
-    elseif methodName == 3
-        method = 'pu';
-        legendString = 'Pure upwind solution';
+    switch methodName
+        case 2
+            method = 'cd';
+            legendString = 'Central difference solution';
+        case 3
+            method = 'pu';
+            legendString = 'Pure upwind solution';
+        case 4
+            method = 'hy';
+            legendString = 'Hybrid solution';
+        case 5
+            method = 'pl';
+            legendString = 'Power Law solution';
+        case 6
+            method = 'qu';
+            legendString = 'QUICK solution';
     end
     
     [phi, exact] = convectionDiffusion(x,[phiA, phiB],u,rho,gamma,method);
@@ -102,13 +112,14 @@ if methodName~=1
     plot(handles.axes1, x,phi,'--','LineWidth',2);
     hold on
     plot(handles.axes1,x,exact,':','LineWidth',2);
+    hold off
     title({strcat('rho = ',num2str(rho),' u = ',num2str(u));
         strcat('phi_A = ',num2str(phiA), ' phi_B = ',num2str(phiB));
         strcat('Number of inner nodes = ',num2str(N),' Gamma = ',num2str(gamma))});
     xlabel('Position (m)');
     ylabel('Phi');
     legend(legendString,'Analytical solution','Location','best');
-    hold off
+    
 end
 
 

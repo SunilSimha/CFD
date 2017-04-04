@@ -19,6 +19,8 @@
 %                         1) 'cd': central differencing
 %                         2) 'uw': upwind
 %                         3) 'hy': hybrid
+%                         4) 'pl': power law
+%                         5) 'qu': QUICK
 %
 % Outputs:
 % phi          : (vector) value of the quantity of interest at the nodes.
@@ -27,8 +29,8 @@
 %%
 function [phi, exact] = convectionDiffusion(x, phiBound, u, rho, gamma, method)
 %Checks:
-if (~strcmp(method,'cd') && ~strcmp(method,'pu') && ~strcmp(method,'hy'))
-    error('Invalid method. Only ''cd'',''pu'' and ''hy'' are accepted')
+if (~strcmp(method,'cd') && ~strcmp(method,'pu') && ~strcmp(method,'hy') && ~strcmp(method,'pl') && ~strcmp(method,'qu'))
+    error('Invalid method. Only ''cd'',''pu'', ''hy'', ''pl'' and ''qu'' are accepted')
 elseif (length(phiBound) ~= 2)
     error('Invalid boundary conditions')
 end
@@ -46,5 +48,9 @@ switch method
         phi = convDiffPU(x, phiBound, F, gamma);
     case 'hy'
         phi = convDiffHY(x, phiBound, F, gamma);
+    case 'pl'
+        phi = convDiffPL(x, phiBound, F, gamma);
+    case 'qu'
+        phi = convDiffPL(x, phiBound, F, gamma);
 end
 end
